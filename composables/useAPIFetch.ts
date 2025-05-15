@@ -1,5 +1,3 @@
-import type { NotificationColor } from "#ui/types";
-
 const httpErrorCodes = {
   unauthorized: 403,
   // unauthenticated: 401,
@@ -7,14 +5,6 @@ const httpErrorCodes = {
   too_many_attempts: 429,
   server_error: 500,
   not_found: 404,
-};
-
-const toastColor: {
-  [key: string]: NotificationColor;
-} = {
-  // success: "emerald",
-  success: "primary",
-  error: "red",
 };
 
 export default function <T>(
@@ -39,26 +29,15 @@ export default function <T>(
   };
 
   const config = useRuntimeConfig();
-  const token =
-    useCookie<string | null>("token").value || useCookie("visitor_token").value;
-  const dashboardToken = useCookie<string | null>("dashboard_token").value;
-  const currency = useCookie<string | undefined>("currency");
+  const token = useCookie<string | null>("token");
   const inLoginView = computed(() => route.path.includes("login"));
 
   let headers: Record<string, any> = {
-    Authorization: `Bearer ${
-      route.path.includes("dashboard") && !inLoginView.value
-        ? dashboardToken
-        : externalToken ?? token
-    }`,
+    Authorization: `Bearer ${token.value}`,
     Language: locale.value,
     "X-Requested-With": "XMLHttpRequest",
     ...useRequestHeaders(["cookie", "x-forwarded-for"]),
   };
-
-  if (currency.value) {
-    headers["Currency"] = currency.value;
-  }
 
   options = {
     ...options,
@@ -73,9 +52,6 @@ export default function <T>(
         const title = Object.values(httpErrorCodes).includes(response.status)
           ? toastTitles.error
           : toastTitles.success;
-        const color = Object.values(httpErrorCodes).includes(response.status)
-          ? toastColor.error
-          : toastColor.success;
       }
     },
   };
