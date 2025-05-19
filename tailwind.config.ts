@@ -9,11 +9,7 @@ const config: Config = {
     "./nuxt.config.ts",
   ],
   theme: {
-    extend: {
-      colors: {
-        primary: "green",
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };

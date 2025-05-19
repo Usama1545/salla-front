@@ -3,6 +3,7 @@ import { watchEffect } from "vue";
 
 const { setToken } = useStore();
 const route = useRoute();
+const apiFetch = useAPIFetch();
 
 const triggerCallback = async () => {
   const queryParams = route.query;
@@ -12,14 +13,13 @@ const triggerCallback = async () => {
     return;
   }
 
-  const { data } = await useAPIFetch("/api/oauth/callback", {
+  const { data } = await apiFetch("/api/oauth/callback", {
     method: "GET",
     params: queryParams,
   });
 
   const accessToken = data.value?.data?.user?.token?.access_token;
-
-  if (accessToken) {
+  if (accessToken && accessToken.length > 0) {
     setToken(accessToken);
   } else {
     console.log("Access token not found in response");

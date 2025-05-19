@@ -5,7 +5,6 @@ export default function () {
 
   const setToken = async (newToken: string) => {
     token.value = newToken;
-    console.log("Token set:", newToken);
   };
 
   return {

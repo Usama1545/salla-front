@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import type { FormError } from "#ui/types";
 const { setToken } = useStore();
+const apiFetch = useAPIFetch();
 const route = useRoute();
 const handleRefreshClick = async () => {
-  const { data } = await useAPIFetch("/api/oauth/refresh-token");
-  const accessToken = data.value?.data?.refresh_token;
-  setToken(accessToken);
-  refreshCookie("token");
+  const { data } = await apiFetch("/api/oauth/refresh-token", {
+    once: true,
+    watch: false,
+  });
+  const accessToken = data.value?.data?.access_token;
+  if (accessToken && accessToken.length > 0) {
+    setToken(accessToken);
+  }
 };
 </script>
 

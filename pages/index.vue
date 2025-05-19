@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { FormError } from "#ui/types";
+const apiFetch = useAPIFetch();
 
 const route = useRoute();
 const handleLoginClick = async () => {
-  const { data } = await useAPIFetch("/api/oauth/redirect");
+  const { data } = await apiFetch("/api/oauth/redirect");
 
   window.location.href = data.value.url;
 };
