@@ -6,13 +6,10 @@
     :columns="columns"
     sort-mode="manual"
     class="w-full h-full"
-    :ui="{
-      divide:
-        'divide-gray-200 dark:text-gray-400 text-gray-600 dark:divide-gray-800',
-    }"
+    :ui="{ divide: 'divide-gray-200 dark:divide-gray-800' }"
   >
-    <template #actions-data="{ row }">
-      <UDropdown
+    <template #actions-cell="{ row }">
+      <UDropdownMenu
         :popper="{
           strategy: 'absolute',
           placement: 'bottom-start',
@@ -24,7 +21,7 @@
           variant="ghost"
           icon="i-heroicons-ellipsis-vertical-20-solid"
         />
-      </UDropdown>
+      </UDropdownMenu>
     </template>
 
     <template
@@ -46,6 +43,7 @@
 </template>
 
 <script setup lang="ts">
+import type { DropdownMenuItem } from "@nuxt/ui";
 const props = defineProps<{
   columns: Array<{ key: string; label: string; sortable?: boolean }>;
   actions?: Function;

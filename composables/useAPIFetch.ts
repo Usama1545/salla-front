@@ -1,14 +1,20 @@
+import type { ToastProps } from "@nuxt/ui";
+
 export default function useApiFetch<T>() {
   const { $i18n } = useNuxtApp();
-  const t = $i18n?.t || ((key: string) => key);
+  const { t } = useI18n();
   const config = useRuntimeConfig();
+  const toast = useToast();
 
-  const toastTitles = {
-    success: t("success"),
-    error: t("error"),
+  const httpErrorCodes = {
+    unauthorized: 403,
+    unauthenticated: 401,
+    validation_error: 422,
+    too_many_attempts: 429,
+    server_error: 500,
+    not_found: 404,
   };
 
-  // Helper to get the latest token (no closure issues)
   const getLatestToken = () => useCookie("token").value;
 
   return (
@@ -40,11 +46,18 @@ export default function useApiFetch<T>() {
       baseURL: config.public.base_api_url,
       headers,
       async onResponse({ response }: any) {
+        if (response.status == 401) return;
+
         const { message: description } = response._data;
         if (description) {
-          const title = [401, 403, 422, 429, 500, 404].includes(response.status)
-            ? toastTitles.error
-            : toastTitles.success;
+          const isError = Object.values(httpErrorCodes).includes(
+            response.status
+          );
+          toast.add({
+            title: isError ? "error" : "success",
+            description: description,
+            color: isError ? "error" : "primary",
+          } satisfies ToastProps);
         }
       },
     });

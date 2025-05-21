@@ -34,12 +34,19 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="absolute w-full h-1 bg-primary">
-    <div
-      class="min-h-screen flex flex-col items-center justify-center text-center bg-white px-4"
-    >
-      <h1 class="text-3xl font-bold mb-2">Salla Auth Processing</h1>
-      <p class="text-gray-600 mb-6">Callback received</p>
-    </div>
-  </div>
+  <UDashboardPage>
+    <UDashboardPanel grow>
+      <UDashboardNavbar
+        class="dark:text-white dark:bg-gray-500 bg-gray-100"
+        title="Products"
+        :badge="0"
+      ></UDashboardNavbar>
+      <div
+        class="flex flex-col items-center justify-center align-center text-center mt-50"
+      >
+        <h1 class="text-3xl font-bold mb-2">Salla Auth Processing</h1>
+        <p class="text-gray-600 mb-6">Callback received</p>
+      </div>
+    </UDashboardPanel>
+  </UDashboardPage>
 </template>

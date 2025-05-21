@@ -10,7 +10,6 @@ const URL = "/api/products";
 
 const { data, pending, refresh } = await apiFetch(URL, {});
 products.value = data.value?.data?.data ?? [];
-console.log(products.value[0]);
 const columns = [
   {
     accessorKey: "actions",
@@ -39,7 +38,6 @@ const actions = (row) => [
     {
       label: "visit",
       icon: "humbleicons:external-link",
-      disabled: !row.url,
       //   click: () => {
       //     window.open(row.url, "_blank");
       //   },
@@ -50,15 +48,24 @@ const actions = (row) => [
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar title="Dashboard" />
-
-      <DashboardTable
-        :rows="products"
-        :columns="columns"
-        :sort="sort"
-        :actions="actions"
-        :pagination="products"
-      />
+      <UDashboardNavbar
+        class="dark:text-white dark:bg-gray-500 bg-gray-100"
+        title="Products"
+        :badge="0"
+      >
+        <template #right>
+          <UButton :label="'Create Product'" icon="i-heroicons-plus" />
+        </template>
+      </UDashboardNavbar>
+      <div class="p-4">
+        <DashboardTable
+          :rows="products"
+          :columns="columns"
+          :sort="sort"
+          :actions="actions"
+          :pagination="products"
+        />
+      </div>
     </UDashboardPanel>
   </UDashboardPage>
 </template>

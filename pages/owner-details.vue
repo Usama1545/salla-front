@@ -20,7 +20,16 @@ owner.value = data.value?.data?.owner ?? {
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <UDashboardNavbar
+        class="dark:text-white dark:bg-gray-500 bg-gray-100"
+        title="Store Owner Detials"
+        :badge="0"
+      >
+      </UDashboardNavbar>
+      <div class="p-4 mt-4">
+        <span class="text-2xl font-bold">Owner Details</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         <UFormField label="Owner ID">
           <UInput
             readonly

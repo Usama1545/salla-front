@@ -11,14 +11,24 @@ const handleLoginClick = async () => {
 </script>
 
 <template>
-  <div
-    class="w-full h-full flex flex-col items-center justify-center text-center bg-white px-4"
-  >
-    <h1 class="text-3xl font-bold mb-2">Salla auth Platform</h1>
-    <p class="text-gray-600 mb-6">Login to your salla account</p>
+  <UDashboardPage>
+    <UDashboardPanel grow>
+      <UDashboardNavbar
+        class="dark:text-white dark:bg-gray-500 bg-gray-100"
+        title="Salla Auth"
+        :badge="0"
+      >
+      </UDashboardNavbar>
+      <div
+        class="flex flex-col items-center justify-center align-center text-center mt-50"
+      >
+        <h1 class="text-3xl font-bold mb-2">Salla auth Platform</h1>
+        <p class="text-gray-600 mb-6">Login to your salla account</p>
 
-    <UButton color="primary" size="lg" @click="handleLoginClick">
-      Login
-    </UButton>
-  </div>
+        <UButton color="primary" size="lg" @click="handleLoginClick">
+          Login
+        </UButton>
+      </div>
+    </UDashboardPanel>
+  </UDashboardPage>
 </template>
